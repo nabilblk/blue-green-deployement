@@ -9,7 +9,7 @@ import scala.concurrent.duration.DurationInt
 object Dashboard {
 
   def echo = group("API_ECHO") {
-    exec(http("all_produit")
+    exec(http("echo_call")
       .get(Config.APP_CONTEXT++"""/dashboard/echo""")
       .check(status.is(200)))
       .pause(10 millisecond)
