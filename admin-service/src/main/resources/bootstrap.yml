@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: admin-service
+server:
+  port: 9009
+management:
+  security:
+    enabled: false

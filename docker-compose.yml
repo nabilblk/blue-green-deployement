@@ -1,0 +1,56 @@
+version: "2"
+services:
+  discovery-service:
+    container_name: discovery-service
+    image: octo/discovery-service
+    ports:
+     - 8761:8761
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+  edge-service:
+    container_name: edge-service
+    image: octo/edge-service
+    ports:
+     - 9999:9999
+    links:
+     - discovery-service
+    depends_on:
+     - discovery-service
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+  admin-service:
+    container_name: admin-service
+    image: octo/admin-service
+    links:
+     - discovery-service
+    ports:
+     - 9009:9009
+    depends_on:
+     - discovery-service
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+  dashboard-service:
+    image: octo/dashboard-service
+    links:
+     - discovery-service
+    depends_on:
+     - discovery-service
+    environment:
+     - SPRING_PROFILES_ACTIVE=docker
+     - ECHO=normal
+  scope:
+    container_name: weave-scope
+    volumes:
+      - "/var/run/:/var/run:rw"
+    command:
+      - "--probe.docker"
+      - "true"
+    image: weaveworks/scope:latest
+    network_mode: "host"
+    pid: "host"
+    ports:
+      - "4040:4040"
+    privileged: true
+    tty: true
+    labels:
+      - "works.weave.role=system"

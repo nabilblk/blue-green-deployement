@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: discovery-service
+---
+server:
+  port: 8761
+spring:
+  profiles: docker
+  cloud:
+    config:
+      uri: http://config-service:8888
+---
+server:
+  port: 8761
+spring:
+  profiles: default
+  cloud:
+    config:
+      uri: http://localhost:8888
