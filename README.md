@@ -1,3 +1,21 @@
+# Zero Downtime using eureka and zuul .
+
+Blue-green deployment is a technique that reduces downtime and risk by running two identical production environments called Blue and Green.
+
+At any time, only one of the environments is live, with the live environment serving all production traffic. For this example, Blue is currently live and Green is idle.
+
+
+
+The component of this example are :
+
+* Service Edge : A service based on `Zuul` that perform load balancing and reverse proxy .
+* Service Registry : A service based on `Eureka` that receive all the topology of our component .
+* Service Dashboard : A simple API that expose a single endpoint `/echo`
+* User load simulator : A simulator for high traffic of user calling the `/echo` endpoint . This component is based on `Gatling` .
+
+![](/assets/figure01.png)
+
+
 ## Compile and generate docker images . 
 
 ```
